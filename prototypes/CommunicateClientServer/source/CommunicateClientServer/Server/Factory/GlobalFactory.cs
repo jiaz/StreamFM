@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Server
 {
-    static sealed class GlobalFactory
+    static class GlobalFactory
     {
         public static IResourceLoader CreateResourceLoader()
         {

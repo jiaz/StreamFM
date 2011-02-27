@@ -7,28 +7,32 @@ namespace Server
 {
     struct Request
     {
+        private string _action;
         public string Action
         {
-            get;
-            private set;
+            get { return _action; }
+            private set { _action = value; }
         }
 
+        private string _actionParameter;
         public string ActionParameter
         {
-            get;
-            private set;
+            get { return _actionParameter; }
+            private set { _actionParameter = value; }
         }
 
+        private string _version;
         public string Version
         {
-            get;
-            private set;
+            get { return _version; }
+            private set { _version = value; }
         }
 
+        private string _client;
         public string Client
         {
-            get;
-            private set;
+            get { return _client; }
+            private set { _client = value; }
         }
 
         public Request(
@@ -38,10 +42,10 @@ namespace Server
             string client
             )
         {
-            this.Action = action;
-            this.ActionParameter = actionParam;
-            this.Version = version;
-            this.Client = client;
+            _action = action;
+            _actionParameter = actionParam;
+            _version = version;
+            _client = client;
         }
     }
 }
