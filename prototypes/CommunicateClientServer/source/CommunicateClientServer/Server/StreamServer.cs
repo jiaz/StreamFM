@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Barcelona.Tracer;
+using Barcelona.Tracer.RepositoryAdapters;
 
 /* *
  * Server
@@ -53,13 +54,13 @@ namespace Server
     /// which queues incoming request and startup new handling
     /// thread to deal with the 
     /// </summary>
-    class StreamServer
+    public class StreamServer
     {
         // Singleton Impl because of only one object may listening 
         // to the same port at one time
         StreamServer()
         {
-
+            Tracer.Adapter = new FileRepositoryAdatper(".\\Test.log");
         }
 
         public static StreamServer Instance
@@ -85,13 +86,16 @@ namespace Server
             // Listen to the port: 826
             IPEndPoint ep = new IPEndPoint(IPAddress.Any, 826);
             TcpListener listner = new TcpListener(ep);
+            listner.Start();
             while (true)
             {
                 TcpClient client = listner.AcceptTcpClient();
                 ThreadPool.QueueUserWorkItem(
                         (c) =>
                         {
-                            Request req = ParseRequest(client);
+                            TcpClient cl = c as TcpClient;
+                            Request req = ParseRequest(cl);
+                            cl.Close();
                         },
                         client
                     );
